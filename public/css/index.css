@@ -1,0 +1,27 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color:white;
+    background-color: black;
+}
+
+#header {
+    font-size: 14px;
+    text-align: center;
+}
+
+#header > h1 {
+    display: inline
+}
+
+hr {
+    color: white;
+}
+
+form {
+    text-align: center;
+}
+
+main > a {
+    color: white;
+    text-decoration: none;
+}
