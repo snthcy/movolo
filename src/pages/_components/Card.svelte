@@ -1,11 +1,10 @@
 <script>
     export let film;
-    
 </script>
 
 <main>
-    <a href="/info/{film.media_type}/{film.media_type == "movie" ? film.title.replace(/ /g, "+") : film.name.replace(/ /g, "+")}"
-        ><h3>{film.media_type == "movie" ? film.title : film.name}</h3>
+    <a href="/info/{ film.media_type }/{ film.id }">
+        <h3>{ film.media_type == "movie" ? film.title : film.name }</h3>
         <p>{ film.overview.length == 0 ? "No overview available." : film.overview.substr(0, 100) + "..."}</p>
         {#if film.poster_path}
             <img
