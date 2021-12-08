@@ -4,24 +4,31 @@ body {
     background-color: black;
 }
 
-#header {
+.header {
     font-size: 14px;
     text-align: center;
 }
 
-#header > h1 {
+.header h1 {
     display: inline
+}
+
+.header a {
+    color: white;
+    text-decoration: none;
 }
 
 hr {
     color: #0f0f0f;
 }
 
-form {
-    text-align: center;
+input {
+    display: block;
+    margin-right: auto;
+    margin-left: auto;
 }
 
-main > a {
+main a {
     color: white;
     text-decoration: none;
 }

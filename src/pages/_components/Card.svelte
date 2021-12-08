@@ -11,8 +11,14 @@
                 src="https://image.tmdb.org/t/p/w500/{film.poster_path}"
                 alt="Film Poster"
             />
+        {:else}
+            <img
+                src="https://dummyimage.com/500x750/000/ffffff&text=++No+Poster+Available"
+                alt="Film Poster"
+            />
         {/if}</a
     >
+    <p>{ (film.vote_average/10).toFixed(2)*100 }% User Score</p>
 </main>
 
 <style>
@@ -31,8 +37,10 @@
         display: inline-block;
         width: 170px;
         cursor: pointer;
+        border-radius: 5px;
     }
     main h3 {
-        text-decoration: underline;
+        text-decoration: none;
+        font-size: 1em
     }
 </style>

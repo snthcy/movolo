@@ -2,10 +2,9 @@
   import { url, isActive } from "@roxi/routify";
   let show = false;
   const _links = [
-    ["./index", "Home"],
-    ["./search", "Search"],
-    ["./donate", "Donate"],
-    ["./about", "About"],
+    ["/index", "Home"],
+    ["/search", "Search"],
+    ["/about", "About"],
   ];
 </script>
 
