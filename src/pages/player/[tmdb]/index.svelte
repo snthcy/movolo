@@ -5,7 +5,7 @@
     let tmdbId = $params.tmdb,
         imdbId,
         selected,
-        url = "https://www.youtube.com/embed/IkdmOVejUlI?controls=0&autoplay=1&modestbranding=1&showinfo=0";
+        url = "https://www.youtube.com/embed/gDFgzV7wq0g?controls=0&autoplay=1&modestbranding=1&loop=1&playlist=gDFgzV7wq0g";
 
     fetch(`https://api.themoviedb.org/3/movie/${tmdbId}?api_key=${Config.tmdbKey}`).then(r=>r.json()).then(r=>{
         imdbId = r.imdb_id;
@@ -26,15 +26,15 @@
     const hide = () => document.querySelector("#server").classList.add("hide");
     const checkAgent = () => {
         if (!navigator.userAgent.includes("Firefox")) {
-            setTimeout(()=>document.querySelector(".warning-container").classList.add("hide"), 1000)
+            setTimeout(()=>document.querySelector(".warning-container").classList.add("hide-warning"), 1500)
         } else {
-            document.querySelector(".warning-container").style.display = "none";
+            document.querySelector(".warning-container").classList.add("hide-warning")
         }
     }
 </script>
 
-<div class="warning-container" on:mouseover={()=>checkAgent()} on:focus={()=>checkAgent()}><h1 id="warning">Movolo is best used in Firefox, with uBlock Origin installed. <br>We recommend to use it for no popups & ads. Thanks! This message will hide in 3 seconds.</h1></div>
-<span id="close" title="Go home" on:click={$goto('/')}><strong>X</strong></span>
+<div class="warning-container" on:mouseover={()=>checkAgent()} on:focus={()=>checkAgent()}><h1 id="warning">Movolo is best used in Firefox, with uBlock Origin installed. <br>We recommend to use it for no popups & ads. Thanks!</h1></div>
+<span id="close" title="Go home" on:click={$goto('/')}><strong>❌</strong></span>
 <select bind:value={selected} id="server" on:mouseover={()=>show()} on:focus={()=>show()} on:blur={()=>hide()} on:mouseout={()=>hide()} on:change={() => check()}>
     <option id="select">• Select Server •</option>
     {#each APIs.movie as api}

@@ -18,7 +18,7 @@
             />
         {/if}</a
     >
-    <p>{ (film.vote_average/10).toFixed(2)*100 }% User Score</p>
+    <p>{ Math.round((film.vote_average/10).toFixed(2)*100) }% User Score</p>
 </main>
 
 <style>

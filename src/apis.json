@@ -1,6 +1,14 @@
 {
     "movie": [
         {
+            "name": "Server 1",
+            "url": "https://vidcloud.stream/api/imdbId.html"
+        },
+        {
+            "name": "Server 2",
+            "url": "https://vidcloud.stream/backup1/imdbId.html"
+        },
+        {
             "name": "2Embed",
             "url": "https://www.2embed.ru/embed/imdb/movie?id=imdbId"
         },
@@ -34,15 +42,15 @@
         },
         {
             "name": "SuperEmbed",
-            "url": "https://getsuperembed.link/?video_id=imdbId&player_sources_toggle_type=1&player_loader=2&preferred_server=12&player_primary_color=000000&player_secondary_color=0f0f0f"
+            "url": "https://getsuperembed.link/?video_id=imdbId&player_sources_toggle_type=2&preferred_server=12&player_primary_color=000000&player_secondary_color=0f0f0f"
         },
         {
             "name": "Trailers.to",
             "url": "https://trailers.to/player/embed/imdb/imdbId"
         },
         {
-            "name": "vidcloud.stream",
-            "url": "https://vidcloud.stream/imdbId.html"
+            "name": "vidclouds.us",
+            "url": "https://vidclouds.us/imdbId.html"
         },
         {
             "name": "VidSource",
@@ -52,27 +60,35 @@
     "tv": [
         {
             "name": "2Embed",
-            "url": "https://www.2embed.ru/embed/tmdb/tv?id=tmdbId&s=seas&e=epi"
+            "url": "https://www.2embed.ru/embed/tmdb/tv?id=tmdbId&s=s3as&e=3pi"
         },
         {
             "name": "APIMovieDB",
-            "url": "https://v2.apimdb.net/e/tmdb/tv/tmdbId/seas/epi/"
+            "url": "https://v2.apimdb.net/e/tmdb/tv/tmdbId/s3as/3pi/"
         },
         {
             "name": "CurtStream",
-            "url": "https://curtstream.com/series/tmdb/tmdbId/seas/epi/"
+            "url": "https://curtstream.com/series/tmdb/tmdbId/s3as/3pi/"
         },
         {
             "name": "DBGDrivePlayer",
-            "url": "https://databasegdriveplayer.co/player.php?type=series&tmdb=tmdbId&season=seas&episode=epi"
+            "url": "https://databasegdriveplayer.co/player.php?type=series&tmdb=tmdbId&season=s3as&episode=3pi"
         },
         {
             "name": "Free Streaming API",
-            "url": "https://fsapi.xyz/tv-tmdb/tmdbId-seas-epi"
+            "url": "https://fsapi.xyz/tv-tmdb/tmdbId-s3as-3pi"
+        },
+        {
+            "name": "SuperEmbed",
+            "url": "https://getsuperembed.link/?video_id=tmdbId&tmdb=1&season=s3as&episode=3pi&player_sources_toggle_type=2&preferred_server=12&player_primary_color=000000&player_secondary_color=0f0f0f"
         },
         {
             "name": "Trailers.to",
-            "url": "https://trailers.to/player/embed/tmdb/tmdbId/SseasEepi"
+            "url": "https://trailers.to/player/embed/tmdb/tmdbId/Ss3asE3pi"
+        },
+        {
+            "name": "VidSource",
+            "url": "https://v2.vidsrc.me/embed/tmdbId/s3as-3pi/"
         }
     ]
 }

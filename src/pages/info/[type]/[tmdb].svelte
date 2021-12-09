@@ -4,6 +4,7 @@
     let info = {
         "title": "Placeholder",
         "overview": "Placeholder",
+        "seasons": []
     };
     
     (async function () {
@@ -16,8 +17,26 @@
             let tv = await fetch(`https://api.themoviedb.org/3/tv/${$params.tmdb}?api_key=${Config.tmdbKey}&language=en-US`);
             let tvData = await tv.json();
             info = tvData;
+            info.seasons = [];
+            for (let i = 1; i <= info.number_of_seasons; i++) {
+                let season = await fetch(`https://api.themoviedb.org/3/tv/${$params.tmdb}/season/${i}?api_key=${Config.tmdbKey}&language=en-US`);
+                let seasonData = await season.json();
+                info.seasons.push(seasonData);
+                info.seasons = info.seasons;
         };
+    }
     })();
+
+    const showEpisodes = (season) => {
+        [...document.querySelectorAll(".season")].forEach(el => el.style.display = "none");
+        [...document.querySelectorAll(".season-container")].forEach(el => el.style.display = "none");
+        [...document.querySelectorAll(`div[data-season='${season}']`)].forEach(el => el.style.display = "");
+    }
+    const showSeasons = (season) => {
+        [...document.querySelectorAll(".season")].forEach(el => el.style.display = "inline");
+        [...document.querySelectorAll(".season-container")].forEach(el => el.style.display = "inline");
+        [...document.querySelectorAll(`div[data-season='${season}']`)].forEach(el => el.style.display = "none");
+    }
 </script>
 
 <main>
@@ -29,10 +48,29 @@
     {/if}
     <h1>{info?.title ? info?.title : info?.name}</h1>
     <p>{info?.overview ? info.overview : "No overview available."}</p>
-    <p>{info?.title ? info?.title : info?.name} has a { (info.vote_average/10).toFixed(2)*100 }% score, rated by users.</p>
-    <br><br>
-    {#if info.status != "Planned"}
+    <p>{info?.title ? info?.title : info?.name} has a { Math.round((info.vote_average/10).toFixed(2)*100) }% score, rated by users.</p>
+    <br>
+    {#if info.status != "Planned" && $params.type == "movie"}
         <a href="/player/{$params.tmdb}">STREAM</a>
+    {:else if info.status != "Planned" && $params.type == "tv"}
+        {#each info.seasons as season}
+            <div class="season-container" style="display: inline;">
+                <a class="season" href="javascript:void(0);" on:click={showEpisodes(season.season_number)}>Season {season.season_number}</a>
+                {#if !(season.season_number % 5)}
+                    <br><br>
+                {/if}
+            </div>
+            <div data-season="{season.season_number}" style="display: none;">
+                <a class="episode" style="background: red !important;" href="javascript:void(0);" on:click={showSeasons(season.season_number)}>Back</a>
+                <br><br>
+                {#each season.episodes as episode}
+                    <a class="episode" href="/player/{$params.tmdb}/{season.season_number}/{episode.episode_number}">Ep. {episode.episode_number}</a>
+                    {#if !(episode.episode_number % 9)}
+                        <br><br>
+                    {/if}
+                {/each}
+            </div>
+        {/each}
     {:else}
         <a class="disable" href="javascript:void(0);">UNABLE TO STREAM</a>
     {/if}
