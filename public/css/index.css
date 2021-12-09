@@ -32,3 +32,73 @@ main a {
     color: white;
     text-decoration: none;
 }
+
+iframe {
+    position: fixed;
+    top: 0px;
+    bottom: 0px;
+    right: 0px;
+    width: 100%;
+    border: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    height: 100%;
+}
+
+select {
+    z-index: 999999;
+    position: absolute;
+    right: 1%;
+    appearance: none;
+    background: black;
+    color: red;
+    text-align: center;
+    font-size: 2.1rem;
+    border: 1px solid transparent;
+}
+
+.color {
+    color: white !important;
+}
+
+.hide {
+    display: block;
+    opacity: 0;
+    transition: opacity 0.5s;
+    transition-delay: 2s;
+}
+
+#warning {
+    position: absolute;
+    z-index: 99999999;
+    text-align: center;
+    left: 13%;
+    top: 45%;
+    -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-color: black;
+}
+
+.warning-container {
+    position: fixed;
+    top: 0px;
+    bottom: 0px;
+    right: 0px;
+    width: 100%;
+    border: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    height: 100%;
+    z-index: 9999999999999999;
+}
+
+#close {
+    position:fixed;
+    color: red;
+    z-index: 9999999999999999999;
+    left: 0.8%;
+    top: -0.3%;
+    font-size: 3rem;
+    background: black;
+}
