@@ -57,10 +57,6 @@
             "url": "https://trailers.to/player/embed/imdb/imdbId"
         },
         {
-            "name": "vidclouds.us",
-            "url": "https://vidclouds.us/imdbId.html"
-        },
-        {
             "name": "VidSource",
             "url": "https://v2.vidsrc.me/embed/imdbId/"
         }
@@ -85,6 +81,10 @@
         {
             "name": "DBGDrivePlayer",
             "url": "https://databasegdriveplayer.co/player.php?type=series&tmdb=tmdbId&season=s3as&episode=3pi"
+        },
+        {
+            "name": "DBGo",
+            "url": "https://dbgo.fun/imdbse.php?id=imdbId&s=s3as&e=3pi"
         },
         {
             "name": "Free Streaming API",

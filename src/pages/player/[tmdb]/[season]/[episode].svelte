@@ -1,11 +1,17 @@
 <script>
     import { params, goto } from '@roxi/routify';
+    import Config from '../../../../config.json'
     import APIs from '../../../../apis.json';
     let tmdbId = $params.tmdb,
+        imdbId = "",
         season = $params.season,
         episode = $params.episode,
         selected,
         url = "https://www.youtube.com/embed/gDFgzV7wq0g?controls=0&autoplay=1&modestbranding=1&loop=1&playlist=gDFgzV7wq0g";
+
+    fetch(`https://api.themoviedb.org/3/tv/${tmdbId}?api_key=${Config.tmdbKey}&append_to_response=external_ids`).then(r=>r.json()).then(r=>{
+        imdbId = r.external_ids.imdb_id;
+    });
     
     const check = () => {
         url = selected;
@@ -41,7 +47,7 @@
 <select bind:value={selected} id="server" on:mouseover={()=>show()} on:focus={()=>show()} on:blur={()=>hide()} on:mouseout={()=>hide()} on:change={() => check()}>
     <option id="select">• Select Server •</option>
     {#each APIs.tv as api}
-        <option value="{api.url.replace("tmdbId", tmdbId).replace("s3as", season).replace("3pi", episode)}">{api.name}</option>
+        <option value="{api.url.replace("imdbId", imdbId).replace("tmdbId", tmdbId).replace("s3as", season).replace("3pi", episode)}">{api.name}</option>
     {/each}
 </select>
 <iframe title="Movie iframe" allowfullscreen loading="eager" src="{ url }"></iframe>
