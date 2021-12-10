@@ -148,3 +148,13 @@ select {
     padding: 6px 4px 6px 4px !important;
     text-decoration: none !important;
 }
+
+.one23movie {
+    left: 0% !important;
+    right: auto !important;
+}
+
+.one23movie-server {
+    left: 0.5% !important;
+    right: auto !important;
+}

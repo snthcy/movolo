@@ -20,6 +20,13 @@
                 url = r.contents;
             });
         }
+        if (selected && new URL(selected).hostname === "googlvideo.com") {
+            document.querySelector("#close").classList.add("one23movie");
+            document.querySelector("#server").classList.add("one23movie-server");
+        } else {
+            document.querySelector("#close").classList?.remove("one23movie");
+            document.querySelector("#server").classList?.remove("one23movie-server");
+        }
     }
 
     const show = () => document.querySelector("#server").classList.remove("hide");

@@ -9,6 +9,10 @@
             "url": "https://vidcloud.stream/backup1/imdbId.html"
         },
         {
+            "name": "123movies",
+            "url": "https://googlvideo.com/jadeed.php?imdb=imdbId&server_name=vcu"
+        },
+        {
             "name": "2Embed",
             "url": "https://www.2embed.ru/embed/imdb/movie?id=imdbId"
         },
@@ -27,6 +31,10 @@
         {
             "name": "DBGo",
             "url": "https://dbgo.fun/imdb.php?id=imdbId"
+        },
+        {
+            "name": "EmbedForFree",
+            "url": "https://embedforfree.co/imdb?id=imdbId"
         },
         {
             "name": "FireSonic",
@@ -54,10 +62,14 @@
         },
         {
             "name": "VidSource",
-            "url": "https://vidsrc.me/embed/imdbId/"
+            "url": "https://v2.vidsrc.me/embed/imdbId/"
         }
     ],
     "tv": [
+        {
+            "name": "123movies",
+            "url": "https://googlvideo.com/tmdb_api.php?se=s3as&ep=3pi&tmdb=tmdbId&server_name=vcu"
+        },
         {
             "name": "2Embed",
             "url": "https://www.2embed.ru/embed/tmdb/tv?id=tmdbId&s=s3as&e=3pi"

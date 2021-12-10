@@ -55,12 +55,14 @@
     {:else if info.status != "Planned" && $params.type == "tv"}
         {#each info.seasons as season}
             <div class="season-container" style="display: inline;">
+                <!-- svelte-ignore a11y-invalid-attribute -->
                 <a class="season" href="javascript:void(0);" on:click={showEpisodes(season.season_number)}>Season {season.season_number}</a>
                 {#if !(season.season_number % 5)}
                     <br><br>
-                {/if}
+                {/if} 
             </div>
             <div data-season="{season.season_number}" style="display: none;">
+                <!-- svelte-ignore a11y-invalid-attribute -->
                 <a class="episode" style="background: red !important;" href="javascript:void(0);" on:click={showSeasons(season.season_number)}>Back</a>
                 <br><br>
                 {#each season.episodes as episode}
@@ -72,6 +74,7 @@
             </div>
         {/each}
     {:else}
+        <!-- svelte-ignore a11y-invalid-attribute -->
         <a class="disable" href="javascript:void(0);">UNABLE TO STREAM</a>
     {/if}
 </main>
