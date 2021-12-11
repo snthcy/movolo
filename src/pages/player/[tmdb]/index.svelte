@@ -12,20 +12,24 @@
     });
     
     const check = () => {
-        url = selected;
         document.querySelector("#select")?.remove();
         if (!document.querySelector("#server").classList.contains("color")) document.querySelector("#server").classList.add("color");
+        if (selected && new URL(selected).hostname === "vidcloud.stream") {
+            url = "https://i.ibb.co/DKnM3RH/aaaaa.png"
+            return window.open(selected, "_blank");
+        }
+        url = selected;
         if (selected && new URL(selected).hostname === "getsuperembed.link") {
             fetch(`https://api.allorigins.win/get?url=${selected}`).then(r=>r.json()).then(r=>{
                 url = r.contents;
             });
         }
-        if (selected && new URL(selected).hostname === "googlvideo.com") {
-            document.querySelector("#close").classList.add("one23movie");
-            document.querySelector("#server").classList.add("one23movie-server");
+        if (selected && new URL(selected).hostname === "googlvideo.com" || new URL(selected).hostname === "databasegdriveplayer.co") {
+            document.querySelector("#close").classList.add("left");
+            document.querySelector("#server").classList.add("left-server");
         } else {
-            document.querySelector("#close").classList?.remove("one23movie");
-            document.querySelector("#server").classList?.remove("one23movie-server");
+            document.querySelector("#close").classList?.remove("left");
+            document.querySelector("#server").classList?.remove("left-server");
         }
     }
 
