@@ -5,8 +5,8 @@
             "url": "https://vidcloud.stream/api/imdbId.html"
         },
         {
-            "name": "Stremio",
-            "url": "https://api.allorigins.win/raw?url=https://vidcloud.stream/backup1/imdbId.html"
+            "name": "VidEmbed",
+            "url": "https://vidcloud.stream/imdbId.html"
         },
         {
             "name": "123movies",
