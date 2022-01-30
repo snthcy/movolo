@@ -7,7 +7,7 @@
         subtitles = [];
 
     onMount(async () => {
-        const { scrape } = (await import(`../../../../utils/scrapers/${server}`)).default;
+        const { scrape } = (await import(`../../../../utils/scrapers/${server}.js`)).default;
         let object = await scrape(tmdbId, "movie");
         videoUrl = object.url;
         subtitles = object.subtitles;

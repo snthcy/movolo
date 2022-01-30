@@ -9,7 +9,7 @@
         subtitles = [];
 
     onMount(async () => {
-        const { scrape } = (await import(`../../../../../utils/scrapers/${server}`)).default;
+        const { scrape } = (await import(`../../../../../utils/scrapers/${server}.js`)).default;
         let object = await scrape(tmdbId, "tv", episode, season);
         videoUrl = object.url;
         subtitles = object.subtitles;
@@ -26,7 +26,7 @@
 </script>
 
 <span id="close" title="Go home" on:click={$goto('/')}><strong>❌</strong></span>
-<video controls autoplay title="Video" src="{ videoUrl }">
+<video controls autoplay title="Video" src="{ videoUrl }" >
     {#if subtitles}
         {#each subtitles as subtitle}
             <track kind={ subtitle.kind } src="{ subtitle.file }" label="{ subtitle.label }">
