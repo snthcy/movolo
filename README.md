@@ -2,12 +2,12 @@
 Movolo is a Movie & TV search engine, powered by TMDB & Svelte.
 
 # Running a development environnment locally
-1. `git clone https://github.com/lem6ns/movolo`
+1. `git clone -b scrape https://github.com/lem6ns/movolo`
 2. `npm i`
 3. `npm run dev`
 
 # Building
-1. `git clone https://github.com/lem6ns/movolo`
+1. `git clone -b scrape https://github.com/lem6ns/movolo`
 2. `npm i`
 3. `npm run build`
 
@@ -17,7 +17,6 @@ Movolo is a Movie & TV search engine, powered by TMDB & Svelte.
 3. Extract the latest release
 4. Change the folder to the Release folder
 6. Use Movolo!
-
 
 # Running locally for linux users
 1. Grab the latest release from https://github.com/lem6ns/movolo/releases/latest
