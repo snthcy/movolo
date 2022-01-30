@@ -23,23 +23,25 @@ async function scrape(tmdbId, type, episode, season) {
         }
     }
 
-    const videoPage2 = await fetch(videoUrl2).then(r => r.text());
-    const videoDOM2 = new DOMParser().parseFromString(videoPage2, "text/html");
-    for (const script of videoDOM2.scripts) {
-        if (script.textContent.match(/https:\/\/s[0-9]\.xemovie\.com/)) {
-            let data = JSON.parse(JSON.stringify(eval(`(${script.textContent.replace("const data = ", "").split("};")[0]}})`)));
-            movieUrl = data.playlist[0].file;
-            subtitles = data.playlist[0].tracks;
+    if (type == "tv") {
+        const videoPage2 = await fetch(videoUrl2).then(r => r.text());
+        const videoDOM2 = new DOMParser().parseFromString(videoPage2, "text/html");
+        for (const script of videoDOM2.scripts) {
+            if (script.textContent.match(/https:\/\/s[0-9]\.xemovie\.com/)) {
+                let data = JSON.parse(JSON.stringify(eval(`(${script.textContent.replace("const data = ", "").split("};")[0]}})`)));
+                movieUrl = data.playlist[0].file;
+                subtitles = data.playlist[0].tracks;
+            }
         }
-    }
 
-    const videoPage3 = await fetch(videoUrl3).then(r => r.text());
-    const videoDOM3 = new DOMParser().parseFromString(videoPage3, "text/html");
-    for (const script of videoDOM3.scripts) {
-        if (script.textContent.match(/https:\/\/s[0-9]\.xemovie\.com/)) {
-            let data = JSON.parse(JSON.stringify(eval(`(${script.textContent.replace("const data = ", "").split("};")[0]}})`)));
-            movieUrl = data.playlist[0].file;
-            subtitles = data.playlist[0].tracks;
+        const videoPage3 = await fetch(videoUrl3).then(r => r.text());
+        const videoDOM3 = new DOMParser().parseFromString(videoPage3, "text/html");
+        for (const script of videoDOM3.scripts) {
+            if (script.textContent.match(/https:\/\/s[0-9]\.xemovie\.com/)) {
+                let data = JSON.parse(JSON.stringify(eval(`(${script.textContent.replace("const data = ", "").split("};")[0]}})`)));
+                movieUrl = data.playlist[0].file;
+                subtitles = data.playlist[0].tracks;
+            }
         }
     }
 
