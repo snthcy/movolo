@@ -9,7 +9,7 @@ async function scrape(tmdbId) {
         const searchPage = await fetch(`${baseUrl}/search.php?sd=${json.title.replace(/ /g, "_")}`).then(r => r.text());
 
         const searchDOM = new DOMParser().parseFromString(searchPage, "text/html");
-        const videoUrl = `${baseUrl}/${[...searchDOM.querySelectorAll("a")].filter(link => link.innerText.includes("-") && link.innerText.replace(/\-/g, " ").includes(json.title))[0].getAttribute("href")}`;
+        const videoUrl = `${baseUrl}/${[...searchDOM.querySelectorAll("a")].filter(link => link.innerText.includes("-") && link.innerText.replace(/\-/g, " ").includes(json.title.split(" ").shift()))[0].getAttribute("href")}`;
 
         const videoPage = await fetch(videoUrl).then(r => r.text());
         const videoDOM = new DOMParser().parseFromString(videoPage, "text/html");

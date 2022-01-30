@@ -69,7 +69,7 @@
             </div>
             <div data-season="{season.season_number}" style="display: none;">
                 <!-- svelte-ignore a11y-invalid-attribute -->
-                <a class="episode" style="background: red !important;" href="javascript:void(0);" on:click={showSeasons(season.season_number)}>Back</a>
+                <a class="episode" style="background: #2e2e2e !important;" href="javascript:void(0);" on:click={showSeasons(season.season_number)}>Back</a>
                 <br><br>
                 {#each Config.scrapers["tv"] as scraper}
                     {#each season.episodes as episode}
@@ -113,12 +113,6 @@
         cursor: pointer;
     }
     main a {
-        background: #3498db;
-        background-image: -webkit-linear-gradient(top, #3498db, #2980b9);
-        background-image: -moz-linear-gradient(top, #3498db, #2980b9);
-        background-image: -ms-linear-gradient(top, #3498db, #2980b9);
-        background-image: -o-linear-gradient(top, #3498db, #2980b9);
-        background-image: linear-gradient(to bottom, #3498db, #2980b9);
         -webkit-border-radius: 28;
         -moz-border-radius: 28;
         border-radius: 28px;
@@ -138,12 +132,6 @@
     }
 
     .disable {
-        background: #3498db;
-        background-image: -webkit-linear-gradient(top, #3498db, #2980b9);
-        background-image: -moz-linear-gradient(top, #3498db, #2980b9);
-        background-image: -ms-linear-gradient(top, #3498db, #2980b9);
-        background-image: -o-linear-gradient(top, #3498db, #2980b9);
-        background-image: linear-gradient(to bottom, #3498db, #2980b9);
         -webkit-border-radius: 28;
         -moz-border-radius: 28;
         border-radius: 28px;

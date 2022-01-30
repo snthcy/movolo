@@ -75,37 +75,25 @@ select {
 }
 
 .episode {
-    background: #3498db !important;
-    background-image: -webkit-linear-gradient(top, #3498db, #2980b9) !important;
-    background-image: -moz-linear-gradient(top, #3498db, #2980b9) !important;
-    background-image: -ms-linear-gradient(top, #3498db, #2980b9) !important;
-    background-image: -o-linear-gradient(top, #3498db, #2980b9) !important;
-    background-image: linear-gradient(to bottom, #3498db, #2980b9) !important;
     -webkit-border-radius: 28 !important;
     -moz-border-radius: 28 !important;
     border-radius: 28px !important;
     font-family: Arial !important;
-    color: #ffffff !important;
+    color: #aaaaaa !important;
     font-size: 20px !important;
-    background: #82be71 !important;
+    background: #262729 !important;
     padding: 6px 4px 6px 4px !important;
     text-decoration: none !important;
 }
 
 .season {
-    background: #3498db !important;
-    background-image: -webkit-linear-gradient(top, #3498db, #2980b9) !important;
-    background-image: -moz-linear-gradient(top, #3498db, #2980b9) !important;
-    background-image: -ms-linear-gradient(top, #3498db, #2980b9) !important;
-    background-image: -o-linear-gradient(top, #3498db, #2980b9) !important;
-    background-image: linear-gradient(to bottom, #3498db, #2980b9) !important;
     -webkit-border-radius: 28 !important;
     -moz-border-radius: 28 !important;
     border-radius: 28px !important;
     font-family: Arial !important;
-    color: #ffffff !important;
+    color: #aaaaaa !important;
     font-size: 20px !important;
-    background: #82be71 !important;
+    background: #262729 !important;
     padding: 6px 4px 6px 4px !important;
     text-decoration: none !important;
 }
