@@ -10,9 +10,15 @@
 
     onMount(async () => {
         const { scrape } = (await import(`../../../../../utils/scrapers/${server}`)).default;
-        // const getSubtitles = (await import(`../../../../scrape/${server}`)).getSubtitles;
-        videoUrl = await scrape(tmdbId, "tv", season, episode);
-        // subtitles = await getSubtitles(tmdbId);
+        let object = await scrape(tmdbId, "tv", episode, season);
+        videoUrl = object.url;
+        subtitles = object.subtitles;
+        if (subtitles) {
+            subtitles.forEach(async (subtitle, index) => {
+                const subtitleBlob = URL.createObjectURL(await fetch(`https://cors.movolo.workers.dev?url=${subtitle.file}`).then(res => res.blob()));
+                subtitles[index].file = subtitleBlob;
+            });
+        }
         document.querySelector("video").addEventListener("error", () => {
             videoUrl = "/later.mp4";
         });
@@ -20,4 +26,10 @@
 </script>
 
 <span id="close" title="Go home" on:click={$goto('/')}><strong>❌</strong></span>
-<video controls autoplay title="Video" src="{ videoUrl }"></video>
+<video controls autoplay title="Video" src="{ videoUrl }">
+    {#if subtitles}
+        {#each subtitles as subtitle}
+            <track kind={ subtitle.kind } src="{ subtitle.file }" label="{ subtitle.label }">
+        {/each}
+    {/if}
+</video>

@@ -7,10 +7,16 @@
         }, {
             "id": "vidzstore",
             "name": "VidzStore"
+        }, {
+            "id": "xemovie",
+            "name": "xemovie"
         }],
         "tv": [{
             "id": "theflix",
             "name": "TheFlix"
+        }, {
+            "id": "xemovie",
+            "name": "xemovie"
         }]
     }
 }

@@ -2,7 +2,7 @@ import Config from "../../config.json";
 
 async function scrape(tmdbId) {
     try {
-        const baseUrl = `https://cors.movolo.workers.dev/?https://stream.vidzstore.com`;
+        const baseUrl = `https://cors.movolo.workers.dev/?url=https://stream.vidzstore.com`;
         let movieUrl = "";
 
         const json = await fetch(`https://api.themoviedb.org/3/movie/${tmdbId}?api_key=${Config.tmdbKey}&language=en-US`).then(r => r.json());
@@ -15,9 +15,9 @@ async function scrape(tmdbId) {
         const videoDOM = new DOMParser().parseFromString(videoPage, "text/html");
 
         movieUrl = videoDOM.querySelector("source").src;
-        return movieUrl;
+        return { url: movieUrl, subtitles: [] };
     } catch {
-        return "/nosource.mp4";
+        return { url: "/nosource.mp4", subtitles: [] };
     }
 }
 

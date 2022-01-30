@@ -2,7 +2,6 @@
     import { params } from '@roxi/routify';
     import { onMount } from 'svelte'
     import Config from "../../../config.json";
-    import Svelecte from 'svelecte';
 
     let info = {
         "title": "Placeholder",
@@ -57,6 +56,7 @@
     {#if info.status != "Planned" && $params.type == "movie"}
         {#each Config.scrapers["movie"] as scraper}
             <a href="/player/{scraper.id}/{$params.tmdb}" style="margin:10px">STREAM {scraper.name}</a>
+            <br><br><br>
         {/each}
     {:else if info.status != "Planned" && $params.type == "tv"}
         {#each info.seasons as season}
@@ -71,11 +71,16 @@
                 <!-- svelte-ignore a11y-invalid-attribute -->
                 <a class="episode" style="background: red !important;" href="javascript:void(0);" on:click={showSeasons(season.season_number)}>Back</a>
                 <br><br>
-                {#each season.episodes as episode}
-                    <a class="episode" href="/player/theflix/{$params.tmdb}/{season.season_number}/{episode.episode_number}">Ep. {episode.episode_number}</a>
-                    {#if !(episode.episode_number % 9)}
-                        <br><br>
-                    {/if}
+                {#each Config.scrapers["tv"] as scraper}
+                    {#each season.episodes as episode}
+                        <a class="episode" href="/player/{scraper.id}/{$params.tmdb}/{season.season_number}/{episode.episode_number}">Ep. {episode.episode_number} ({scraper.name})</a>
+                        {#if !(episode.episode_number % 4)}
+                            <br><br>
+                        {/if}
+                    {/each}
+                    <br>
+                    <br>
+                    <br>
                 {/each}
             </div>
         {/each}

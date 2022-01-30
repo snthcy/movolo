@@ -1,7 +1,7 @@
 import Config from "../../config.json";
 
 async function scrape(tmdbId, type, episode, season) {
-    const baseUrl = `https://cors.movolo.workers.dev/?https://theflix.to`;
+    const baseUrl = `https://cors.movolo.workers.dev/?url=https://theflix.to`;
     let movieUrl = "";
 
     const json = await fetch(`https://api.themoviedb.org/3/${type}/${tmdbId}?api_key=${Config.tmdbKey}&language=en-US`).then(r => r.json());
@@ -10,10 +10,10 @@ async function scrape(tmdbId, type, episode, season) {
     const DOM = new DOMParser().parseFromString(request, "text/html");
     const script = JSON.parse(DOM.querySelector("#__NEXT_DATA__").textContent);
 
-    if (script.page == "/404" || !script.props.pageProps.videoUrl) return "/nosource.mp4";
+    if (script.page == "/404" || !script.props.pageProps.videoUrl) return { url: "/nosource.mp4", subtitles: [] };
 
     movieUrl = script.props.pageProps.videoUrl;
-    return movieUrl;
+    return { url: movieUrl, subtitles: [] };
 }
 
 export default { scrape };
