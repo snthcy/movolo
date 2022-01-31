@@ -1,5 +1,8 @@
 # Movolo
-Movolo is a Movie & TV search engine, powered by TMDB & Svelte.
+Movolo is a Movie & TV search engine, powered by TMDB, [OpenSubtitles](https://www.opensubtitles.org) & Svelte.
+
+# OpenSubtitles
+We grab subtitles from [OpenSubtitles.org](https://www.opensubtitles.org).
 
 # Running a development environnment locally
 1. `git clone -b scrape https://github.com/lem6ns/movolo`

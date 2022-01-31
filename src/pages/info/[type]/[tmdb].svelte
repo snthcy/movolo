@@ -117,7 +117,7 @@
         -moz-border-radius: 28;
         border-radius: 28px;
         font-family: Arial;
-        color: #414142;
+        color: #BCC4DB;
         font-size: 30px;
         background: #262729;
         padding: 10px 20px 10px 20px;
