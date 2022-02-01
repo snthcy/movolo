@@ -16,7 +16,8 @@
             document.querySelector("video").oncanplay = null;
         }
         subtitles = object.subtitles;
-        subtitles.push(...await getSubtitles({ tmdb, type: "movie" }));
+        const subs = await getSubtitles({ tmdbId: tmdb, type: "movie" });
+        if (subs) subtitles.push(...subs);
         subtitles.forEach(async (subtitle, index) => {
             if (!subtitle.provider) {
                 const subtitleBlob = URL.createObjectURL(await fetch(`https://cors.movolo.workers.dev?url=${subtitle.file}`).then(res => res.blob()));
