@@ -39,7 +39,10 @@
     };
 </script>
 
-<span id="close" title="Go home" on:click={$goto('/')}><strong>❌</strong></span>
+<span id="close" title="Go home" on:click={() => {
+    window.localStorage[tmdb] = document.querySelector("video").currentTime-5;
+    $goto('/');
+}}><strong>❌</strong></span>
 <!-- svelte-ignore a11y-media-has-caption -->
 <video controls autoplay title="Video" src="{ videoUrl }" id="video">
     {#each subtitles as subtitle}

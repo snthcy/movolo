@@ -52,6 +52,7 @@ select {
     border: 1px solid transparent;
     color: #BCC4DB;
     background: #262729;
+    border-radius: 5px;
 }
 
 .color {
