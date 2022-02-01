@@ -47,16 +47,11 @@ video {
 }
 
 select {
-    z-index: 999999;
-    position: absolute;
-    right: 0.5%;
-    top: 7%;
-    appearance: none;
-    background: black;
-    color: red;
     text-align: center;
-    font-size: 2.1rem;
+    appearance: none;
     border: 1px solid transparent;
+    color: #BCC4DB;
+    background: #262729;
 }
 
 .color {
@@ -84,6 +79,7 @@ select {
     background: #262729 !important;
     padding: 6px 4px 6px 4px !important;
     text-decoration: none !important;
+    white-space: nowrap;
 }
 
 .season {
@@ -96,4 +92,5 @@ select {
     background: #262729 !important;
     padding: 6px 4px 6px 4px !important;
     text-decoration: none !important;
+    white-space: nowrap;
 }

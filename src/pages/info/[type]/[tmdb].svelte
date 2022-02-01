@@ -8,6 +8,8 @@
         "overview": "Placeholder",
         "seasons": []
     };
+    let server = "theflix",
+        subtitleServer = "trailers";
 
     onMount(async () => {
         if ($params.type == "movie") {
@@ -53,11 +55,22 @@
     <p>{info?.overview ? info.overview : "No overview available."}</p>
     <p>{info?.title ? info?.title : info?.name} has a { Math.round((info.vote_average/10).toFixed(2)*100) }% score, rated by users.</p>
     <br>
-    {#if info.status != "Planned" && $params.type == "movie"}
-        {#each Config.scrapers["movie"] as scraper}
-            <a href="/player/{scraper.id}/{$params.tmdb}" style="margin:10px">STREAM {scraper.name}</a>
-            <br><br><br>
+    <select bind:value={server}>
+        {#each Config.scrapers[$params.type] as server}
+            <option value="{server.id}">{server.name}</option>
         {/each}
+    </select>
+    <br>
+    <select bind:value={subtitleServer}>
+        <option value="none">None</option>
+        {#each Config.subtitles as server}
+            <option value="{server.id}">{server.name}</option>
+        {/each}
+    </select>
+    <br>
+    <br>
+    {#if info.status != "Planned" && $params.type == "movie"}
+        <a href="/player/{server}/{subtitleServer}/{$params.tmdb}" style="margin:10px">STREAM</a>
     {:else if info.status != "Planned" && $params.type == "tv"}
         {#each info.seasons as season}
             <div class="season-container" style="display: inline;">
@@ -67,21 +80,17 @@
                     <br><br>
                 {/if} 
             </div>
-            <div data-season="{season.season_number}" style="display: none;">
+            <div data-season="{season.season_number}" style="display: none; overflow: scroll; overflow-x: hidden; height: 300px">
                 <!-- svelte-ignore a11y-invalid-attribute -->
+                <br>
                 <a class="episode" style="background: #2e2e2e !important;" href="javascript:void(0);" on:click={showSeasons(season.season_number)}>Back</a>
                 <br><br>
-                {#each Config.scrapers["tv"] as scraper}
                     {#each season.episodes as episode}
-                        <a class="episode" href="/player/{scraper.id}/{$params.tmdb}/{season.season_number}/{episode.episode_number}">Ep. {episode.episode_number} ({scraper.name})</a>
-                        {#if !(episode.episode_number % 4)}
+                        <a class="episode" href="/player/{server}/{subtitleServer}/{$params.tmdb}/{season.season_number}/{episode.episode_number}">Ep. {episode.episode_number}</a>
+                        {#if !(episode.episode_number % 9)}
                             <br><br>
                         {/if}
                     {/each}
-                    <br>
-                    <br>
-                    <br>
-                {/each}
             </div>
         {/each}
     {:else}

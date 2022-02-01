@@ -18,5 +18,18 @@
             "id": "xemovie",
             "name": "xemovie"
         }]
-    }
+    },
+    "subtitles": [{
+        "id": "opensubtitles",
+        "name": "www.OpenSubtitles.org"
+    }, {
+        "id": "trailers",
+        "name": "Trailers.to"
+    }, {
+        "id": "xemovie",
+        "name": "xemovie.co"
+    }, {
+        "id": "gdriveplayer",
+        "name": "GDrivePlayer"
+    }]
 }

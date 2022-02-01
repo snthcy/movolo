@@ -1,28 +1,31 @@
-async function getSubtitles(query) {
-    const baseUrl = `https://cors.movolo.workers.dev/?url=https://xemovie.co`;
+import Config from "../../config.json";
+
+async function getSubtitles(options) {
+    const baseUrl = `https://cors.movolo.workers.dev/?url=https://xemovie.co`,
+        type = options.type;
     let subtitles = [];
 
-    const searchPage = await fetch(`${baseUrl}/search?q=${encodeURIComponent(query)}`).then(r => r.text());
+    const json = await fetch(`https://api.themoviedb.org/3/${type}/${options.tmdbId}?api_key=${Config.tmdbKey}&language=en-US`).then(r => r.json());
+    const name = type == "movie" ? json.title : json.name;
+
+    const searchPage = await fetch(`${baseUrl}/search?q=${encodeURIComponent(name)} ${type == "tv" ? `season ${options.season}` : ""}`).then(r => r.text());
     const searchDOM = new DOMParser().parseFromString(searchPage, "text/html");
 
-    const videoUrl1 = `https://cors.movolo.workers.dev/?url=${[...searchDOM.getElementById(`"movie"`).parentElement.parentElement.querySelectorAll("a")].filter(link => !link.className)[0]}/watch`;
-    const videoUrl2 = `https://cors.movolo.workers.dev/?url=${[...searchDOM.getElementById(`"serie"`).parentElement.parentElement.querySelectorAll("a")].filter(link => !link.className)[0]}/watch`;
+    const videoUrls = [`https://cors.movolo.workers.dev/?url=${type == "movie" ? [...searchDOM.getElementById(`"movie"`).parentElement.parentElement.querySelectorAll("a")].filter(link => !link.className)[0] : [...searchDOM.getElementById(`"serie"`).parentElement.parentElement.querySelectorAll("a")].filter(link => !link.className)[0]}${options.episode ? `-ep${options.episode}` : ""}/watch`, `https://cors.movolo.workers.dev/?url=${type == "movie" ? [...searchDOM.getElementById(`"movie"`).parentElement.parentElement.querySelectorAll("a")].filter(link => !link.className)[0] : [...searchDOM.getElementById(`"serie"`).parentElement.parentElement.querySelectorAll("a")].filter(link => !link.className)[0]}${options.episode ? `-episode-${options.episode}` : ""}/watch`, `https://cors.movolo.workers.dev/?url=${type == "movie" ? [...searchDOM.getElementById(`"movie"`).parentElement.parentElement.querySelectorAll("a")].filter(link => !link.className)[0] : [...searchDOM.getElementById(`"serie"`).parentElement.parentElement.querySelectorAll("a")].filter(link => !link.className)[0]}${options.episode ? `-ep-${options.episode}` : ""}/watch`, `https://cors.movolo.workers.dev/?url=${type == "movie" ? [...searchDOM.getElementById(`"movie"`).parentElement.parentElement.querySelectorAll("a")].filter(link => !link.className)[0] : [...searchDOM.getElementById(`"serie"`).parentElement.parentElement.querySelectorAll("a")].filter(link => !link.className)[0]}${options.episode ? `-ep${parseInt(options.episode).toLocaleString("en-US", { minimumIntegerDigits: 2 })}` : ""}/watch`]
 
-    const videoPage1 = await fetch(videoUrl1).then(r => r.text());
-    const videoDOM1 = new DOMParser().parseFromString(videoPage1, "text/html");
-    for (const script of videoDOM1.scripts) {
-        if (script.textContent.match(/https:\/\/s[0-9]\.xemovie\.com/)) {
-            let data = JSON.parse(JSON.stringify(eval(`(${script.textContent.replace("const data = ", "").split("};")[0]}})`)));
-            subtitles = data.playlist[0].tracks;
-        }
-    }
+    for (const videoUrl of videoUrls) {
+        try {
+            const videoPage = await fetch(videoUrl).then(r => r.text());
+            const videoDOM = new DOMParser().parseFromString(videoPage, "text/html");
 
-    const videoPage2 = await fetch(videoUrl2).then(r => r.text());
-    const videoDOM2 = new DOMParser().parseFromString(videoPage2, "text/html");
-    for (const script of videoDOM2.scripts) {
-        if (script.textContent.match(/https:\/\/s[0-9]\.xemovie\.com/)) {
-            let data = JSON.parse(JSON.stringify(eval(`(${script.textContent.replace("const data = ", "").split("};")[0]}})`)));
-            subtitles = data.playlist[0].tracks;
+            for (const script of videoDOM.scripts) {
+                if (script.textContent.match(/https:\/\/s[0-9]\.xemovie\.com/)) {
+                    let data = JSON.parse(JSON.stringify(eval(`(${script.textContent.replace("const data = ", "").split("};")[0]}})`)));
+                    subtitles = data.playlist[0].tracks;
+                }
+            }
+        } catch {
+            continue;
         }
     }
 
