@@ -23,7 +23,7 @@
                 subtitles[index].file = subtitleBlob;
             }
             let subtitleText = await fetch(subtitle.file).then(res => res.text())
-            subtitleText = "WEBVTT\r\n\r\n" + subtitleText.replace(/(\d+:\d+:\d+)+,(\d+)/g, '$1.$2')
+            subtitleText = subtitleText.startsWith("WEBVTT") ? subtitleText : "WEBVTT\r\n\r\n" + subtitleText.replace(/(\d+:\d+:\d+)+,(\d+)/g, '$1.$2')
             let blob = new Blob([subtitleText], {type: 'text/vtt'});
             const subtitleBlob = window.URL.createObjectURL(blob);
             subtitles[index].file = subtitleBlob;
@@ -31,17 +31,14 @@
         document.querySelector("video").addEventListener("error", () => {
             videoUrl = "/later.mp4";
         });
-    });
 
-    window.onunload = function () {
-        window.localStorage[tmdb] = document.querySelector("video").currentTime-5;
-    };
+        document.querySelector("video").ontimeupdate = () => {
+            window.localStorage[tmdb] = document.querySelector("video").currentTime-2.5
+        }
+    });
 </script>
 
-<span id="close" title="Go home" on:click={() => {
-    window.localStorage[tmdb] = document.querySelector("video").currentTime-5;
-    $goto('/');
-}}><strong>❌</strong></span>
+<span id="close" title="Go home" on:click={() => {$goto('/')}}><strong>❌</strong></span>
 <!-- svelte-ignore a11y-media-has-caption -->
 <video controls autoplay title="Video" src="{ videoUrl }" id="video">
     {#each subtitles as subtitle}

@@ -11,7 +11,19 @@
         let object = await scrape(tmdb, "tv", episode, season);
         videoUrl = object.url;
         document.querySelector("video").oncanplay = () => {
-            document.querySelector("video").currentTime = parseInt(window.localStorage[tmdb]);
+            if (!window.localStorage[`${tmdb}tv`]) {
+                let object = {
+                    seasons: {
+
+                    }
+                }
+                object.seasons[season] = {
+                    episodes: {}
+                }
+                object.seasons[season].episodes[episode] = "0";
+                window.localStorage[`${tmdb}tv`] = JSON.stringify(object);
+            }
+            document.querySelector("video").currentTime = parseInt(JSON.parse(window.localStorage[`${tmdb}tv`]).seasons[season].episodes[episode]);
             document.querySelector("video").play();
             document.querySelector("video").oncanplay = null;
         }
@@ -24,7 +36,7 @@
                 subtitles[index].file = subtitleBlob;
             }
             let subtitleText = await fetch(subtitle.file).then(res => res.text())
-            subtitleText = "WEBVTT\r\n\r\n" + subtitleText.replace(/(\d+:\d+:\d+)+,(\d+)/g, '$1.$2')
+            subtitleText = subtitleText.startsWith("WEBVTT") ? subtitleText : "WEBVTT\r\n\r\n" + subtitleText.replace(/(\d+:\d+:\d+)+,(\d+)/g, '$1.$2')
             let blob = new Blob([subtitleText], {type: 'text/vtt'});
             const subtitleBlob = window.URL.createObjectURL(blob);
             subtitles[index].file = subtitleBlob;
@@ -32,17 +44,16 @@
         document.querySelector("video").addEventListener("error", () => {
             videoUrl = "/later.mp4";
         });
+        document.querySelector("video").ontimeupdate = () => {
+            let object = JSON.parse(window.localStorage[`${tmdb}tv`])
+            object.seasons[season].episodes[episode] = document.querySelector("video").currentTime-2.5;
+            
+            window.localStorage[`${tmdb}tv`] = JSON.stringify(object);
+        }
     });
-
-    window.onunload = function () {
-        window.localStorage[tmdb] = document.querySelector("video").currentTime-5;
-    };
 </script>
 
-<span id="close" title="Go home" on:click={() => {
-    window.localStorage[tmdb] = document.querySelector("video").currentTime-5;
-    $goto('/');
-}}><strong>❌</strong></span>
+<span id="close" title="Go home" on:click={() => {$goto('/')}}><strong>❌</strong></span>
 <!-- svelte-ignore a11y-media-has-caption -->
 <video controls autoplay title="Video" src="{ videoUrl }" id="video">
     {#each subtitles as subtitle}

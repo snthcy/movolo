@@ -83,10 +83,15 @@
             <div data-season="{season.season_number}" style="display: none; overflow: scroll; overflow-x: hidden; height: 300px">
                 <!-- svelte-ignore a11y-invalid-attribute -->
                 <br>
+                <!-- svelte-ignore a11y-invalid-attribute -->
                 <a class="episode" style="background: #2e2e2e !important;" href="javascript:void(0);" on:click={showSeasons(season.season_number)}>Back</a>
                 <br><br>
                     {#each season.episodes as episode}
-                        <a class="episode" href="/player/{server}/{subtitleServer}/{$params.tmdb}/{season.season_number}/{episode.episode_number}">Ep. {episode.episode_number}</a>
+                        {#if window.localStorage[`${$params.tmdb}tv`] && JSON.parse(window.localStorage[`${$params.tmdb}tv`])?.seasons[season.season_number]?.episodes[episode.episode_number]}
+                            <a class="episode" style="background: rgb(0,120,0) !important" href="/player/{server}/{subtitleServer}/{$params.tmdb}/{season.season_number}/{episode.episode_number}">Ep. {episode.episode_number}</a>
+                        {:else}
+                            <a class="episode" href="/player/{server}/{subtitleServer}/{$params.tmdb}/{season.season_number}/{episode.episode_number}">Ep. {episode.episode_number}</a>
+                        {/if}
                         {#if !(episode.episode_number % 9)}
                             <br><br>
                         {/if}
