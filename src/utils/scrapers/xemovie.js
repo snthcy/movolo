@@ -1,4 +1,5 @@
 import Config from "../../config.json";
+import Fuse from "fuse.js";
 
 async function scrape(tmdbId, type, episode, season) {
     const baseUrl = `https://cors.movolo.workers.dev/?url=https://xemovie.co`;
@@ -6,10 +7,25 @@ async function scrape(tmdbId, type, episode, season) {
         subtitles = [];
 
     const json = await fetch(`https://api.themoviedb.org/3/${type}/${tmdbId}?api_key=${Config.tmdbKey}&language=en-US`).then(r => r.json());
-    const searchPage = await fetch(`${baseUrl}/search?q=${type == "movie" ? encodeURIComponent(json.title) : encodeURIComponent(json.name)} ${type == "tv" ? `season ${season}` : ""}`).then(r => r.text());
+    const searchPage = await fetch(`${baseUrl}/search?q=${type == "movie" ? encodeURIComponent(json.title) : encodeURIComponent(json.name)}${season ? season : " "}`).then(r => r.text());
 
     const searchDOM = new DOMParser().parseFromString(searchPage, "text/html");
-    const videoUrls = [`https://cors.movolo.workers.dev/?url=${type == "movie" ? [...searchDOM.getElementById(`"movie"`).parentElement.parentElement.querySelectorAll("a")].filter(link => !link.className)[0] : [...searchDOM.getElementById(`"serie"`).parentElement.parentElement.querySelectorAll("a")].filter(link => !link.className)[0]}${episode ? `-ep${episode}` : ""}/watch`, `https://cors.movolo.workers.dev/?url=${type == "movie" ? [...searchDOM.getElementById(`"movie"`).parentElement.parentElement.querySelectorAll("a")].filter(link => !link.className)[0] : [...searchDOM.getElementById(`"serie"`).parentElement.parentElement.querySelectorAll("a")].filter(link => !link.className)[0]}${episode ? `-episode-${episode}` : ""}/watch`, `https://cors.movolo.workers.dev/?url=${type == "movie" ? [...searchDOM.getElementById(`"movie"`).parentElement.parentElement.querySelectorAll("a")].filter(link => !link.className)[0] : [...searchDOM.getElementById(`"serie"`).parentElement.parentElement.querySelectorAll("a")].filter(link => !link.className)[0]}${episode ? `-ep-${episode}` : ""}/watch`, `https://cors.movolo.workers.dev/?url=${type == "movie" ? [...searchDOM.getElementById(`"movie"`).parentElement.parentElement.querySelectorAll("a")].filter(link => !link.className)[0] : [...searchDOM.getElementById(`"serie"`).parentElement.parentElement.querySelectorAll("a")].filter(link => !link.className)[0]}${episode ? `-ep${parseInt(episode).toLocaleString("en-US", { minimumIntegerDigits: 2 })}` : ""}/watch`]
+    const movieArray = [...searchDOM.getElementById(`"movie"`).parentElement.parentElement.querySelectorAll("a")].filter(link => !link.className).map(link =>{
+        return {
+            link: link.href, name: link.parentElement.innerText.split("\n").filter(a=>a)[0].split(" (")[0]
+        }
+    });
+    const seriesArray = [...searchDOM.getElementById(`"serie"`).parentElement.parentElement.querySelectorAll("a")].filter(link => !link.className).map(link =>{
+        return {
+            link: link.href, name: link.parentElement.innerText.split("\n").filter(a=>a)[0].split(" (")[0]
+        }
+    });
+    const videoUrls = [
+        `https://cors.movolo.workers.dev/?url=${type == "movie" ? new Fuse(movieArray, {keys: ["name"]}).search(json.title)[0].item.link : new Fuse(seriesArray, {keys: ["name"]}).search(json.name)[0].item.link}${episode ? `-ep${episode}` : ""}/watch`,
+        `https://cors.movolo.workers.dev/?url=${type == "movie" ? new Fuse(movieArray, {keys: ["name"]}).search(json.title)[0].item.link : new Fuse(seriesArray, {keys: ["name"]}).search(json.name)[0].item.link}${episode ? `-episode-${episode}` : ""}/watch`,
+        `https://cors.movolo.workers.dev/?url=${type == "movie" ? new Fuse(movieArray, {keys: ["name"]}).search(json.title)[0].item.link : new Fuse(seriesArray, {keys: ["name"]}).search(json.name)[0].item.link}${episode ? `-ep-${episode}` : ""}/watch`, 
+        `https://cors.movolo.workers.dev/?url=${type == "movie" ? new Fuse(movieArray, {keys: ["name"]}).search(json.title)[0].item.link : new Fuse(seriesArray, {keys: ["name"]}).search(json.name)[0].item.link}${episode ? `-ep${parseInt(episode).toLocaleString("en-US", { minimumIntegerDigits: 2 })}` : ""}/watch`
+    ];
 
     for (const videoUrl of videoUrls) {
         try {
