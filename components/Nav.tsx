@@ -1,6 +1,6 @@
 import Link from 'next/link';
 
-export default () => {
+export default function Nav() {
     return (
         <nav className="bg-black">
             <div className="py-2 pl-3 pr-1 mx-auto border">
