@@ -19,36 +19,34 @@ const runMiddleware = (req, res, fn) => {
     })
 };
 
-const getScraperProviders = () => {
+const getScraperProviders = async () => {
     const providers = [];
     const dir = path.resolve("util", "scrapers")
     const files = readdirSync(dir).filter(f => f.endsWith(".js"));
-    files.forEach(async (f) => {
-        const { info } = (await import(`${dir}/${f}`)).default;
+    for (const file of files) {
+        const { info } = await import(`../../util/scrapers/${file}`);
         providers.push(info);
-    });
-
-    console.log(providers)
+    };
 
     return providers;
 }
 
-const getSubtitleProviders = () => {
+const getSubtitleProviders = async () => {
     const providers = [];
     const dir = path.resolve("util", "subtitles")
     const files = readdirSync(dir).filter(f => f.endsWith(".js"));
-    files.forEach(async (f) => {
-        const { info } = (await import(`${dir}/${f}`)).default;
+    for (const file of files) {
+        const { info } = await import(`../../util/subtitles/${file}`);
         providers.push(info);
-    });
+    };
 
     return providers;
 }
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-    const scrapers = getScraperProviders();
-    const subtitles = getSubtitleProviders();
-    
+    const scrapers = await getScraperProviders();
+    const subtitles = await getSubtitleProviders();
+
     const json = {
         status: 200,
         error: null,

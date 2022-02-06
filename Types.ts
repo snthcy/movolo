@@ -4,10 +4,9 @@ export interface Subtitles {
 }
 
 export interface Subtitle {
-    name: string;
+    label: string;
     url: string;
-    language: string;
-    type: "captions" | "subtitles";
+    kind: "captions" | "subtitles";
     hearingImpaired: boolean;
 }
 
