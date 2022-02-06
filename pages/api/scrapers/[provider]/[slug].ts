@@ -1,8 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import Cors from "cors";
 import fetch from "node-fetch";
-import Config from "../../../../../config.json";
-import { ScrapeResult } from "../../../../../Types";
+import Config from "../../../../config.json";
+import { ScrapeResult } from "../../../../Types";
 
 const cors = Cors({
     methods: ["GET", "HEAD"],
