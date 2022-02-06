@@ -1,7 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import Cors from "cors";
-import fetch from "node-fetch";
-import Config from "../../../../../config.json";
 
 const cors = Cors({
     methods: ["GET", "HEAD"],
@@ -19,11 +17,17 @@ const runMiddleware = (req, res, fn) => {
     })
 };
 
-const getSubtitles = async (tmdb: { tmdbId: string, type: string }, provider: string) => {
+const getSubtitles = async (tmdb: { tmdbId: string, type: string, lang: string, season?: string, episode?: string }, provider: string) => {
     const { get } = await import(`../../../../../util/subtitles/${provider}`);
 
     // get subtitles
-    const subtitles = await get(tmdb.tmdbId, tmdb.type);
+    const subtitles = await get({
+        tmdbId: tmdb.tmdbId,
+        type: tmdb.type,
+        lang: tmdb.lang,
+        season: tmdb.season,
+        episode: tmdb.episode
+    });
     return subtitles;
 }
 
@@ -31,15 +35,22 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     // #region - init
     let { provider, tmdbId, type } = req.query;
 
+    let lang;
+    let season;
+    let episode;
+
+    if (tmdbId[1]) lang = tmdbId[1].toString().toLowerCase() || null;
+    if (tmdbId[2]) season = tmdbId[2].toString().toLowerCase() || null;
+    if (tmdbId[3]) episode = tmdbId[3].toString().toLowerCase() || null;
     provider = provider.toString().toLowerCase();
-    tmdbId = tmdbId.toString().toLowerCase();
+    tmdbId = tmdbId[0].toLowerCase();
     type = type.toString().toLowerCase();
 
     const allowedProviders = [
-        "gdp",
-        "os",
+        "gdriveplayer",
+        "opensubtitles",
         "trailers",
-        "xem"
+        "xemovie"
     ]
 
     await runMiddleware(req, res, cors);
@@ -55,7 +66,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     };
     // #endregion
 
-    res.json(await getSubtitles({ tmdbId, type }, provider));
+    res.json(await getSubtitles({ tmdbId, type, lang, season, episode }, provider));
 }
 
 export default handler;
